@@ -49,14 +49,14 @@ namespace {
     // Teapot texture filenames
     const char* textureFilenames[] = {
         "TextureTeapotBrass.png",
-        "TextureTeapotBlue.png",
+        "Human1.png",
         "TextureTeapotRed.png",
         "building_texture.jpeg"
     };
     
     // Model scale factor
-    const float kObjectScaleNormal = 3.0f;
-    const float kObjectScaleOffTargetTracking = 12.0f;
+    const float kObjectScaleNormal = 20.0f;
+//    const float kObjectScaleOffTargetTracking = 12.0f;
 }
 
 
@@ -202,17 +202,14 @@ namespace {
     // We must detect if background reflection is active and adjust the culling direction.
     // If the reflection is active, this means the pose matrix has been reflected as well,
     // therefore standard counter clockwise face culling will result in "inside out" models.
-    if (offTargetTrackingEnabled) {
-        glDisable(GL_CULL_FACE);
-    } else {
-        glEnable(GL_CULL_FACE);
-    }
+    glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    
     glCullFace(GL_BACK);
     if(QCAR::Renderer::getInstance().getVideoBackgroundConfig().mReflection == QCAR::VIDEO_BACKGROUND_REFLECTION_ON)
         glFrontFace(GL_CW);  //Front camera
     else
         glFrontFace(GL_CCW);   //Back camera
-    
     
     for (int i = 0; i < state.getNumTrackableResults(); ++i) {
         // Get the trackable
@@ -225,31 +222,38 @@ namespace {
         // OpenGL 2
         QCAR::Matrix44F modelViewProjection;
         
-        if (offTargetTrackingEnabled) {
-            SampleApplicationUtils::rotatePoseMatrix(90, 1, 0, 0,&modelViewMatrix.data[0]);
-            SampleApplicationUtils::scalePoseMatrix(kObjectScaleOffTargetTracking, kObjectScaleOffTargetTracking, kObjectScaleOffTargetTracking, &modelViewMatrix.data[0]);
-        } else {
-            SampleApplicationUtils::translatePoseMatrix(0.0f, 0.0f, kObjectScaleNormal, &modelViewMatrix.data[0]);
-            SampleApplicationUtils::scalePoseMatrix(kObjectScaleNormal, kObjectScaleNormal, kObjectScaleNormal, &modelViewMatrix.data[0]);
-        }
+        SampleApplicationUtils::translatePoseMatrix(0.0f, 0.0f, kObjectScaleNormal, &modelViewMatrix.data[0]);
+        SampleApplicationUtils::scalePoseMatrix(kObjectScaleNormal, kObjectScaleNormal, kObjectScaleNormal, &modelViewMatrix.data[0]);
         
         SampleApplicationUtils::multiplyMatrix(&vapp.projectionMatrix.data[0], &modelViewMatrix.data[0], &modelViewProjection.data[0]);
         
+        float x = modelViewMatrix.data[12];
+        float y = modelViewMatrix.data[13];
+        float z = modelViewMatrix.data[14];
+        float distance = sqrt(x*x + y*y + z*z);
+        
+        NSLog(@"DISTANCE: %f", distance);
+        
         glUseProgram(shaderProgramID);
         
-        if (offTargetTrackingEnabled) {
-            glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.vertices);
-            glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.normals);
-            glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)buildingModel.texCoords);
-        } else {
-            glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotVertices);
-            glVertexAttribPointer(normalHandle, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotNormals);
-            glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)teapotTexCoords);
-        }
+        GLfloat vertices[] = {  -5, -10, 0, // bottom left corner
+                                -5,  10, 0, // top left corner
+                                 5,  10, 0, // top right corner
+                                 5, -10, 0  // bottom right corner
+        }; // bottom right corner
+        
+        const GLfloat texices[] = { 0, 0,
+                                    0, 1,
+                                    1, 1,
+                                    1, 0 };
+        
+        glVertexAttribPointer(vertexHandle, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+        glVertexAttribPointer(textureCoordHandle, 2, GL_FLOAT, GL_FALSE, 0, texices);//(const GLvoid*)teapotTexCoords);
         
         glEnableVertexAttribArray(vertexHandle);
-        glEnableVertexAttribArray(normalHandle);
         glEnableVertexAttribArray(textureCoordHandle);
+        
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         
         // Choose the texture based on the target name
         int targetIndex = 0; // "stones"
@@ -260,22 +264,18 @@ namespace {
         
         glActiveTexture(GL_TEXTURE0);
         
-        if (offTargetTrackingEnabled) {
-            glBindTexture(GL_TEXTURE_2D, augmentationTexture[3].textureID);
-        } else {
-            glBindTexture(GL_TEXTURE_2D, augmentationTexture[targetIndex].textureID);
-        }
+        glBindTexture(GL_TEXTURE_2D, augmentationTexture[1].textureID);
         glUniformMatrix4fv(mvpMatrixHandle, 1, GL_FALSE, (const GLfloat*)&modelViewProjection.data[0]);
         glUniform1i(texSampler2DHandle, 0 /*GL_TEXTURE0*/);
         
-        if (offTargetTrackingEnabled) {
-            glDrawArrays(GL_TRIANGLES, 0, (int)buildingModel.numVertices);
-        } else {
-            glDrawElements(GL_TRIANGLES, NUM_TEAPOT_OBJECT_INDEX, GL_UNSIGNED_SHORT, (const GLvoid*)teapotIndices);
-        }
+        GLubyte indices[] = {
+            0, 1, 2,
+            0, 2, 3,
+        };
+        
+        glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(indices[0]) , GL_UNSIGNED_BYTE, (const GLvoid*)indices);
         
         glDisableVertexAttribArray(vertexHandle);
-        glDisableVertexAttribArray(normalHandle);
         glDisableVertexAttribArray(textureCoordHandle);
         
         SampleApplicationUtils::checkGlError("EAGLView renderFrameQCAR");
@@ -283,8 +283,7 @@ namespace {
     
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
-    
-    
+    glDisable(GL_BLEND);
     
     QCAR::Renderer::getInstance().end();
     [self presentFramebuffer];
@@ -298,6 +297,10 @@ namespace {
     shaderProgramID = [SampleApplicationShaderUtils createProgramWithVertexShaderFileName:@"Simple.vertsh"
                                                    fragmentShaderFileName:@"Simple.fragsh"];
 
+    // TODO
+     QCAR::setHint(QCAR::HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 2);
+
+    
     if (0 < shaderProgramID) {
         vertexHandle = glGetAttribLocation(shaderProgramID, "vertexPosition");
         normalHandle = glGetAttribLocation(shaderProgramID, "vertexNormal");

@@ -23,14 +23,14 @@
     
     _aboutPages = [[NSMutableDictionary alloc] init];
     _aboutPages[@"Image Targets"] = @"IT_about";
-    _aboutPages[@"Cylinder Targets"] = @"CT_about";
-    _aboutPages[@"Multi Targets"] = @"MT_about";
-    _aboutPages[@"Object Reco"] = @"OR_about";
-    _aboutPages[@"User Defined Targets"] = @"UD_about";
-    _aboutPages[@"Cloud Reco"] = @"CR_about";
-    _aboutPages[@"Text Reco"] = @"TR_about";
-    _aboutPages[@"Frame Markers"] = @"FM_about";
-    _aboutPages[@"Virtual Buttons"] = @"VB_about";
+//    _aboutPages[@"Cylinder Targets"] = @"CT_about";
+//    _aboutPages[@"Multi Targets"] = @"MT_about";
+//    _aboutPages[@"Object Reco"] = @"OR_about";
+//    _aboutPages[@"User Defined Targets"] = @"UD_about";
+//    _aboutPages[@"Cloud Reco"] = @"CR_about";
+//    _aboutPages[@"Text Reco"] = @"TR_about";
+//    _aboutPages[@"Frame Markers"] = @"FM_about";
+//    _aboutPages[@"Virtual Buttons"] = @"VB_about";
     
     // Make sure the navigation bar is visible
     [self.navigationController setNavigationBarHidden:NO animated:NO];

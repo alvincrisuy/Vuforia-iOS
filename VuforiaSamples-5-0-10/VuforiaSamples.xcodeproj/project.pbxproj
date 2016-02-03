@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		18EB634C1ACC70F200EF1C28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18EB634B1ACC70F200EF1C28 /* Localizable.strings */; };
 		781781551C43D3F0004C11D2 /* libVuforia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 781781541C43D3F0004C11D2 /* libVuforia.a */; };
+		78A705001C60B97E005114AA /* Human1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78A704FF1C60B97E005114AA /* Human1.png */; };
+		78A705031C61EDD2005114AA /* PhotoDetection.dat in Resources */ = {isa = PBXBuildFile; fileRef = 78A705011C61EDD2005114AA /* PhotoDetection.dat */; };
+		78A705041C61EDD2005114AA /* PhotoDetection.xml in Resources */ = {isa = PBXBuildFile; fileRef = 78A705021C61EDD2005114AA /* PhotoDetection.xml */; };
 		D21B07EC1A1B4AA20041ECF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21B07EB1A1B4AA20041ECF3 /* main.m */; };
 		D21B07EF1A1B4AA20041ECF3 /* VuforiaSamplesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21B07EE1A1B4AA20041ECF3 /* VuforiaSamplesAppDelegate.m */; };
 		D21B07F71A1B4AA20041ECF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21B07F61A1B4AA20041ECF3 /* Images.xcassets */; };
@@ -193,6 +196,9 @@
 		781781521C43CA3A004C11D2 /* WordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordList.h; sourceTree = "<group>"; };
 		781781531C43CA3A004C11D2 /* WordResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordResult.h; sourceTree = "<group>"; };
 		781781541C43D3F0004C11D2 /* libVuforia.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVuforia.a; sourceTree = "<group>"; };
+		78A704FF1C60B97E005114AA /* Human1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Human1.png; sourceTree = "<group>"; };
+		78A705011C61EDD2005114AA /* PhotoDetection.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = PhotoDetection.dat; sourceTree = "<group>"; };
+		78A705021C61EDD2005114AA /* PhotoDetection.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PhotoDetection.xml; sourceTree = "<group>"; };
 		D21B07E61A1B4AA20041ECF3 /* Vuforia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vuforia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21B07EB1A1B4AA20041ECF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D21B07ED1A1B4AA20041ECF3 /* VuforiaSamplesAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VuforiaSamplesAppDelegate.h; sourceTree = "<group>"; };
@@ -575,6 +581,7 @@
 				FB7A430B1A8E376B0068CF5E /* TextureTeapotGreen.png */,
 				FB7A430C1A8E376B0068CF5E /* TextureTeapotRed.png */,
 				FB7A430D1A8E376B0068CF5E /* TextureTeapotYellow.png */,
+				78A704FF1C60B97E005114AA /* Human1.png */,
 				FB7A42E91A8E376B0068CF5E /* CloudReco */,
 				FB7A42EB1A8E376B0068CF5E /* CylinderTargets */,
 				FB7A42F11A8E376B0068CF5E /* FrameMarkers */,
@@ -788,6 +795,8 @@
 			children = (
 				FB7A43521A8E41840068CF5E /* IT.png */,
 				FB7A42F81A8E376B0068CF5E /* IT_about.html */,
+				78A705011C61EDD2005114AA /* PhotoDetection.dat */,
+				78A705021C61EDD2005114AA /* PhotoDetection.xml */,
 				FB7A42F91A8E376B0068CF5E /* StonesAndChips.dat */,
 				FB7A42FA1A8E376B0068CF5E /* StonesAndChips.xml */,
 				FB7A42FB1A8E376B0068CF5E /* Tarmac.dat */,
@@ -1000,8 +1009,10 @@
 				FBC15EB51AB0585C00B8327E /* VirtualButtonLineShader.vertsh in Resources */,
 				FB7A43251A8E376B0068CF5E /* TextureTransparent.png in Resources */,
 				FB5190BC1A9F5FA500729216 /* OR.png in Resources */,
+				78A705041C61EDD2005114AA /* PhotoDetection.xml in Resources */,
 				D21B07F71A1B4AA20041ECF3 /* Images.xcassets in Resources */,
 				FB7A432C1A8E376B0068CF5E /* StonesAndChips.dat in Resources */,
+				78A705031C61EDD2005114AA /* PhotoDetection.dat in Resources */,
 				FB7A432F1A8E376B0068CF5E /* Tarmac.xml in Resources */,
 				FB7A43261A8E376B0068CF5E /* FM_about.html in Resources */,
 				FB7A43221A8E376B0068CF5E /* sodacan.dat in Resources */,
@@ -1009,6 +1020,7 @@
 				FB5190C01A9F62C100729216 /* TR.png in Resources */,
 				FB7A43231A8E376B0068CF5E /* sodacan.xml in Resources */,
 				FB7A43471A8E376B0068CF5E /* icon_camera@2x.png in Resources */,
+				78A705001C60B97E005114AA /* Human1.png in Resources */,
 				FB7A43321A8E376B0068CF5E /* MT_about.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

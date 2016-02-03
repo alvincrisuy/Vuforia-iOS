@@ -101,7 +101,7 @@ countries.
      object:nil];
     
     // initialize AR
-    [vapp initAR:QCAR::GL_20 orientation:self.interfaceOrientation];
+    [vapp initAR:QCAR::GL_20 orientation:[[UIApplication sharedApplication] statusBarOrientation]];
 
     // show loading animation while AR is being initialized
     [self showLoadingAnimation];
@@ -232,7 +232,9 @@ countries.
 
 // load the data associated to the trackers
 - (bool) doLoadTrackersData {
-    dataSetStonesAndChips = [self loadObjectTrackerDataSet:@"StonesAndChips.xml"];
+//    dataSetStonesAndChips = [self loadObjectTrackerDataSet:@"StonesAndChips.xml"];
+    dataSetStonesAndChips = [self loadObjectTrackerDataSet:@"PhotoDetection.xml"];
+
     dataSetTarmac = [self loadObjectTrackerDataSet:@"Tarmac.xml"];
     if ((dataSetStonesAndChips == NULL) || (dataSetTarmac == NULL)) {
         NSLog(@"Failed to load datasets");
